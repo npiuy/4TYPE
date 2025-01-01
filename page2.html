@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4タイプ診断</title>
+</head>
+<body>
+    <h1>4タイプ診断</h1>
+    <h4>できるだけ両端に答えてください。<br>どうしてもわからない場合のみ「？」を選択してください。</h4>
+    <form id="quizForm">
+        <!-- 質問リストはJavaScriptで生成 -->
+    </form>
+    <button type="button" id="submitButton">結果を見る</button>
+
+    <script>
+        // 質問リスト
+        const questions = [
+            "どっちかというと？<br>（A：目立ちたがり、 B：仕切り屋）",
+            "泣いて頼まれたら？<br>（A：「イヤ」とは言えない、 B：みっともないと思ってしまう）",
+            "クラスで一番才能のある人とは？<br>（A：友達になりたい、 B：ライバルとして認められたい）",
+            "好きな人に、「自分はほれらている！」と実感できるのは<br>（A：すべてが好きと言われるとき、 B：相手の愛情の方が大きいと感じるとき）",
+            "どんなプレゼントをあげたい？<br>（A：自分があげたいもの、 B：誰もが納得できる、価値あるもの）",
+            "「よし、明日からは早起きするぞ！」と宣言した。さてどうなる？<br>（A：3日で忘れる、 B：言った限りは守る）",
+            "恋人とそろそろ危ないカンジ。別れるなら、どうする？<br>（A：別の人を好きになりフェードアウト、 B：相手が言い出す前に切り出す）",
+            "子どもの頃、遊ぶときは<br>（A：気の合う友達を誘って遊んだ、 B：得意な遊びに友達を誘った）",
+            "叶えたい夢へのアプローチの方法は？<br>（A：有言実行、 B：実現の可能性が高くなるまで言わない）",
+            "先輩から、同僚に比べ自分が<br>（A：目をかけてもらえるとうれしい、 B：評価されるとうれしい）",
+            "後輩から、自分がどう思われていると分かったらショック？<br>（A：怖がられ、嫌われている、 B：バカにされ、みくびられている）",
+            "買い物で迷っているとき、有効な店員のひと押しの言葉とは？<br>（A：「お似合い」「今売れている」、 B：「最新型」「限定」「お買い得」）"
+        ];
+
+        const options = ["A", "どちらかといえばA", "？", "どちらかといえばB", "B"];
+        const form = document.getElementById("quizForm");
+
+        // 質問と選択肢を生成
+        questions.forEach((question, index) => {
+            const questionDiv = document.createElement("div");
+
+            const questionText = document.createElement("p");
+            questionText.innerHTML = `${index + 1}. ${question}`;
+            questionDiv.appendChild(questionText);
+
+            options.forEach(option => {
+                const label = document.createElement("label");
+                const input = document.createElement("input");
+                input.type = "radio";
+                input.name = `question${index + 1}`;
+                input.value = option;
+                input.required = true; // 必須設定
+
+                label.appendChild(input);
+                label.append(` ${option}`);
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(document.createElement("br"));
+            });
+
+            form.appendChild(questionDiv);
+        });
+
+        // 点数計算とページ遷移
+        document.getElementById("submitButton").addEventListener("click", () => {
+            if (!form.checkValidity()) {
+                alert("全ての質問に回答してください。");
+                return; // 未回答がある場合は処理を中断
+            }
+
+            const formData = new FormData(form);
+            let aScore = 0;
+            let bScore = 0;
+
+            for (let [key, value] of formData.entries()) {
+                if (value === "A") {
+                    aScore += 2;
+                } else if (value === "どちらかといえばA") {
+                    aScore += 1;
+                } else if (value === "B") {
+                    bScore += 2;
+                } else if (value === "どちらかといえばB") {
+                    bScore += 1;
+                }
+            }
+
+            if (aScore > bScore) {
+                window.location.href = "pageT.html"; // Aが多い場合
+            } else if (bScore > aScore) {
+                window.location.href = "pageS.html"; // Bが多い場合
+            } else {
+                window.location.href = "page4.html"; // 同点の場合
+            }
+        });
+    </script>
+</body>
+</html>
