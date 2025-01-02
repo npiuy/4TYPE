@@ -13,131 +13,138 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>4タイプ診断</title>
         <style>
-            body {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-            }
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-            h1,
-            h4 {
-                margin: 10px 0;
-            }
+h1,
+h4 {
+    margin: 10px 0;
+}
 
-            form {
-                text-align: center;
-                /* フォーム全体を中央揃え */
-            }
+form {
+    text-align: center;
+    /* フォーム全体を中央揃え */
+}
 
-            input[type="radio"] {
-                appearance: none;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                margin: 0;
-                /* 不要な余白を除去 */
-                width: 20px;
-                /* ラジオボタンの幅 */
-                height: 20px;
-                /* ラジオボタンの高さ */
-                border: 2px solid #ccc;
-                /* ラジオボタンの枠線 */
-                border-radius: 50%;
-                /* 円形にする */
-                outline: none;
-                cursor: pointer;
-                display: inline-block;
-            }
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+    /* 不要な余白を除去 */
+    width: 20px;
+    /* ラジオボタンの幅 */
+    height: 20px;
+    /* ラジオボタンの高さ */
+    border: 2px solid #ccc;
+    /* ラジオボタンの枠線 */
+    border-radius: 50%;
+    /* 円形にする */
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+}
 
-            /* 各ラジオボタンのサイズと色を個別に設定 */
-            input[type="radio"].option1 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid red;
-                /* 選択肢1の色 */
-            }
+/* 各ラジオボタンのサイズと色を個別に設定 */
+input[type="radio"].option1 {
+    border: 3px solid red;
+    /* 選択肢1の色 */
+}
 
-            input[type="radio"].option2 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid #fdaaaa;
-                /* 選択肢2の色 */
-            }
+input[type="radio"].option2 {
+    border: 3px solid #fdaaaa;
+    /* 選択肢2の色 */
+}
 
-            input[type="radio"].option3 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid #d3d3d3;
-                /* 選択肢3の色 */
-            }
+input[type="radio"].option3 {
+    border: 3px solid #d3d3d3;
+    /* 選択肢3の色 */
+}
 
-            input[type="radio"].option4 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid #8d97ff;
-                /* 選択肢4の色 */
-            }
+input[type="radio"].option4 {
+    border: 3px solid #8d97ff;
+    /* 選択肢4の色 */
+}
 
-            input[type="radio"].option5 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid blue;
-                /* 選択肢5の色 */
-            }
+input[type="radio"].option5 {
+    border: 3px solid blue;
+    /* 選択肢5の色 */
+}
 
-            /* 選択された場合の背景色 */
-            input[type="radio"]:checked {
-                background-color: grey;
-            }
+/* 選択された場合の背景色 */
+input[type="radio"].option1:checked {
+    background-color: red;
+}
 
-            /* 質問部分のスタイル */
-            .highlight {
-                background-color: #ffffff;
-                border: 2px solid grey;
-                padding: 10px;
-                border-radius: 8px;
-                font-weight: bold;
-                /* 太字 */
-                margin-bottom: 20px;
-                /* 質問間のスペース */
-                display: flex;
-                /* 質問全体をフレックスボックス化 */
-                flex-direction: column;
-                /* 質問と選択肢を縦に並べる */
-                text-align: left;
-                /* 選択肢は左揃え */
-            }
+input[type="radio"].option2:checked {
+    background-color: #fdaaaa;
+}
 
-            /* ボタンのスタイル */
-            .button-container {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                /* ボタン間のスペース */
-                margin-top: 20px;
-                /* 上部マージン */
-            }
+input[type="radio"].option3:checked {
+    background-color: #d3d3d3;
+}
 
-            button {
-                font-size: 18px;
-                /* テキストサイズ */
-                padding: 15px 30px;
-                /* 内側の余白（縦 横） */
-                border-radius: 8px;
-                /* ボタンの角丸 */
-                border: none;
-                /* ボーダーをなくす */
-                background-color: #d3d3d3;
-                /* 背景色 */
-                color: black;
-                /* テキスト色 */
-                cursor: pointer;
-                /* カーソルをポインタに変更 */
-            }
+input[type="radio"].option4:checked {
+    background-color: #8d97ff;
+}
+
+input[type="radio"].option5:checked {
+    background-color: blue;
+}
+
+/* 質問部分のスタイル */
+.highlight {
+    background-color: #ffffff;
+    border: 2px solid grey;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    /* 太字 */
+    margin-bottom: 20px;
+    /* 質問間のスペース */
+    display: flex;
+    /* 質問全体をフレックスボックス化 */
+    flex-direction: column;
+    /* 質問と選択肢を縦に並べる */
+    text-align: left;
+    /* 選択肢は左揃え */
+}
+
+/* ボタンのスタイル */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    /* ボタン間のスペース */
+    margin-top: 20px;
+    /* 上部マージン */
+}
+
+button {
+    font-size: 18px;
+    /* テキストサイズ */
+    padding: 15px 30px;
+    /* 内側の余白（縦 横） */
+    border-radius: 8px;
+    /* ボタンの角丸 */
+    border: none;
+    /* ボーダーをなくす */
+    background-color: #d3d3d3;
+    /* 背景色 */
+    color: black;
+    /* テキスト色 */
+    cursor: pointer;
+    /* カーソルをポインタに変更 */
+}
+
         </style>
     </head>
 
