@@ -30,9 +30,23 @@
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+            padding: 15px 30px; /* ボタンの内側余白を調整（大きさ） */
+            font-size: 18px; /* フォントサイズを大きく */
+            font-weight: bold; /* フォントを太字に */
+            color: #ffffff; /* テキストの色を白に */
+            background-color: #007bff; /* ボタンの背景色を青に */
+            border: none; /* ボタンの枠線をなくす */
+            border-radius: 10px; /* ボタンの角を丸くする */
+            cursor: pointer; /* ホバー時にポインタを表示 */
+            transition: background-color 0.3s ease; /* ホバーアニメーション */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* ホバー時の背景色を濃い青に */
+        }
+
+        button:active {
+            background-color: #003d80; /* クリック時の背景色をさらに濃い青に */
         }
     </style>
 </head>
