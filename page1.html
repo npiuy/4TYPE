@@ -454,6 +454,7 @@
             let aScore = 0;
             let bScore = 0;
 
+            // 回答を集計
             for (let key in answers) {
                 const value = answers[key];
                 if (value === "A") {
@@ -467,6 +468,13 @@
                 }
             }
 
+            // テスト用：点数を表示
+            const isTesting = false; // テスト中はtrue、本番ではfalseに変更
+            if (isTesting) {
+                alert(`Aスコア: ${aScore}, Bスコア: ${bScore}`);
+            }
+
+            // 結果ページへの遷移
             if (aScore > bScore) {
                 window.location.href = "page2.html"; // A+aが多い場合
             } else if (bScore > aScore) {
@@ -475,6 +483,8 @@
                 window.location.href = "page4.html"; // 同点の場合
             }
         }
+
+
     </script>
 
 </body>
