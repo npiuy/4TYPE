@@ -209,14 +209,16 @@
                     scores[optionValue] += selectedOptions.length === 1 ? 1 : 0.5;
                 });
 
-                currentQuestion.classList.remove('active');
-                currentIndex++;
-
-                if (currentIndex < questions.length) {
+                if (currentIndex < questions.length - 1) {
+                    currentQuestion.classList.remove('active');
+                    currentIndex++;
                     questions[currentIndex].classList.add('active');
                     updateButtons();
                 } else {
-                    calculateResult();
+                    // 「結果を見る」の際は質問を非表示にしない
+                    nextButton.disabled = true; // ボタンを一時無効化
+                    nextButton.textContent = "計算中...";
+                    calculateResult(); // 結果を計算してページ遷移
                 }
             });
 
