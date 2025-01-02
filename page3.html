@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>4タイプ診断</h1>
-    <h4>できるだけ両端に答えてください。<br>どうしてもわからない場合のみ「？」を選択してください。</h4>
+    <h4>できるだけ両端に答えてください。<br>どうしてもわからない場合のみ「わからない/どちらでもない」を選択してください。</h4>
     <form id="quizForm">
         <!-- 質問リストはJavaScriptで生成 -->
     </form>
@@ -16,39 +16,148 @@
 
     <script>
         // 質問リスト
-        const questions = [
-            "どっちかというと？<br>（A：話すより聞く方が好き、 B：聞くもの好きだけど、熱く語るのも好き）",
-            "恋人とはどんな関係が理想？<br>（A：一緒にいて落ち着く関係、 B：お互いのすべてを分かり合う関係）",
-            "趣味にはまることがある？<br>（A：特に何かに熱中できない、 B：熱く語りたい趣味がいくつかある）",
-            "クラスの人気者や中心人物をどう思う？<br>（A：自分とは関係ない人、 B：なんとなく憧れてしまう）",
-            "こういう「性格テスト」をどう思う？？<br>（A：鵜吞みにはしないが興味はある、 B：人間はタイぷ分けなどできないはず）",
-            "自分のことを好きか？<br>（A：そんなことは考えない、 B：時々、すごくイヤになる）",
-            "好きな人ができた。さてどうなる？<br>（A：なぜ好きか、どこが好きか考える、 B：自分の気持ちが止まらなくなる）",
-            "小さい子どもの頃、ものすごく好きなおもちゃやグッズなどがあった？<br>（A：特になかった、 B：手放せず、無いと泣いたりした）",
-            "買い物で、買う・買わないの基準は？<br>（A：必要・無難・効率・手頃、 B：好き・自分らしい・かっこいい）",
-            "あなたの説明、分からないと言われるときの理由はどっち？<br>（A：合っているけどミもフタもない、 B：長くてまどろっこしい）",
-            "ノルマ・締め切りなどの言葉を聞くと思い浮かべるイメージは？<br>（A：調整・段取り・計画・工夫、 B：管理・数字・賞罰・成果）",
-            "あなたがすごくイヤだと感じるのは、どっち？<br>（A：指示ミスで仕事がムダになる、 B：間違っていると思うことを強制される）"
-        ];
+        const questionsWithOptions = [
+    {
+        question: "どっちかというと？",
+        options: [
+            "話すより聞く方が好き",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "聞くもの好きだけど、熱く語るのも好き"
+        ]
+    },
+    {
+        question: "恋人とはどんな関係が理想？",
+        options: [
+            "一緒にいて落ち着く関係",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "お互いのすべてを分かり合う関係"
+        ]
+    },
+    {
+        question: "趣味にはまることがある？",
+        options: [
+            "特に何かに熱中できない",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "熱く語りたい趣味がいくつかある"
+        ]
+    },
+    {
+        question: "クラスの人気者や中心人物をどう思う？",
+        options: [
+            "自分とは関係ない人",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "なんとなく憧れてしまう"
+        ]
+    },
+    {
+        question: "こういう「性格テスト」をどう思う？？",
+        options: [
+            "鵜吞みにはしないが興味はある",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "人間はタイぷ分けなどできないはず"
+        ]
+    },
+    {
+        question: "自分のことを好きか？",
+        options: [
+            "そんなことは考えない",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "時々、すごくイヤになる"
+        ]
+    },
+    {
+        question: "好きな人ができた。さてどうなる？",
+        options: [
+            "なぜ好きか、どこが好きか考える",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "自分の気持ちが止まらなくなる"
+        ]
+    },
+    {
+        question: "小さい子どもの頃、ものすごく好きなおもちゃやグッズなどがあった？",
+        options: [
+            "特になかった",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "手放せず、無いと泣いたりした"
+        ]
+    },
+    {
+        question: "買い物で、買う・買わないの基準は？",
+        options: [
+            "必要・無難・効率・手頃",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "好き・自分らしい・かっこいい"
+        ]
+    },
+    {
+        question: "あなたの説明、分からないと言われるときの理由はどっち？",
+        options: [
+            "合っているけどミもフタもない",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "長くてまどろっこしい"
+        ]
+    },
+    {
+        question: "ノルマ・締め切りなどの言葉を聞くと思い浮かべるイメージは？",
+        options: [
+            "調整・段取り・計画・工夫",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "管理・数字・賞罰・成果"
+        ]
+    },
+    {
+        question: "あなたがすごくイヤだと感じるのは、どっち？",
+        options: [
+            "指示ミスで仕事がムダになる",
+            "どちらかといえば↑",
+            "わからない/どちらでもない",
+            "どちらかといえば↓",
+            "間違っていると思うことを強制される"
+        ]
+    }
+];
 
-        const options = ["A", "どちらかといえばA", "？", "どちらかといえばB", "B"];
+
+
         const form = document.getElementById("quizForm");
 
         // 質問と選択肢を生成
-        questions.forEach((question, index) => {
+        questionsWithOptions.forEach((item, index) => {
             const questionDiv = document.createElement("div");
 
             const questionText = document.createElement("p");
-            questionText.innerHTML = `${index + 1}. ${question}`;
+            questionText.textContent = `${index + 1}. ${item.question}`;
             questionDiv.appendChild(questionText);
 
-            options.forEach(option => {
+            item.options.forEach((option, i) => {
                 const label = document.createElement("label");
                 const input = document.createElement("input");
                 input.type = "radio";
                 input.name = `question${index + 1}`;
-                input.value = option;
-                input.required = true; // 必須設定
+                input.value = ["A", "a", "neutral", "b", "B"][i]; // 内部で使う値
+                input.required = true;
 
                 label.appendChild(input);
                 label.append(` ${option}`);
@@ -73,19 +182,19 @@
             for (let [key, value] of formData.entries()) {
                 if (value === "A") {
                     aScore += 2;
-                } else if (value === "どちらかといえばA") {
+                } else if (value === "a") {
                     aScore += 1;
                 } else if (value === "B") {
                     bScore += 2;
-                } else if (value === "どちらかといえばB") {
+                } else if (value === "b") {
                     bScore += 1;
                 }
             }
 
             if (aScore > bScore) {
-                window.location.href = "pageH.html"; // Aが多い場合
+                window.location.href = "pageH.html"; // A+aが多い場合
             } else if (bScore > aScore) {
-                window.location.href = "pageR.html"; // Bが多い場合
+                window.location.href = "pageR.html"; // B+bが多い場合
             } else {
                 window.location.href = "page4.html"; // 同点の場合
             }
