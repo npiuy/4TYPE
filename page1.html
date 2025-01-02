@@ -1,11 +1,13 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4タイプ診断</title>
     <!DOCTYPE html>
     <html lang="ja">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,55 +23,119 @@
                 padding: 0;
                 font-family: Arial, sans-serif;
             }
-    
-            h1, h4 {
+
+            h1,
+            h4 {
                 margin: 10px 0;
             }
-    
+
             form {
-    text-align: left; /* フォーム内部は左揃え */
-}
-    
+                text-align: left;
+                /* フォーム内部は左揃え */
+            }
+
             form div {
                 margin-bottom: 20px;
             }
-    
+
             label {
-                display: block;
-                margin: 5px 0;
+                display: flex;
+                /* ラジオボタンとテキストをフレックスボックスにする */
+                align-items: center;
+                /* ラジオボタンとテキストを垂直方向に中央揃え */
+                gap: 10px;
+                /* ラジオボタンとテキストの間隔 */
+                justify-content: flex-start;
+                /* 全体を左揃え */
             }
-    
-            button {
-                margin-top: 20px;
-                padding: 10px 20px;
-                font-size: 16px;
+
+            input[type="radio"] {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                margin: 0;
+                /* 不要な余白を除去 */
+                width: 20px;
+                /* ラジオボタンの幅 */
+                height: 20px;
+                /* ラジオボタンの高さ */
+                border: 2px solid #ccc;
+                /* ラジオボタンの枠線 */
+                border-radius: 50%;
+                /* 円形にする */
+                outline: none;
                 cursor: pointer;
+                display: inline-block;
+                vertical-align: middle;
+                /* 垂直方向に中央揃え */
             }
 
-            /* 質問用スタイル */
-.highlight {
-    background-color: #f0efef; 
-    border: 2px solid #919191; 
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold; /* 太字 */
-    margin-bottom: 20px; /* 質問間のスペース */
-}
+            /* 各ラジオボタンのサイズと色を個別に設定 */
+            input[type="radio"].option1 {
+                width: 25px;
+                height: 25px;
+                border: 3px solid red;
+                /* 選択肢1の色 */
+            }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* ボタン間のスペース */
-    margin-top: 0px;
-}
+            input[type="radio"].option2 {
+                width: 20px;
+                height: 20px;
+                border: 3px solid red;
+                /* 選択肢2の色 */
+            }
 
-button {
-    padding: 8px 15px;
-    font-size: 16px;
-    cursor: pointer;
-}
+            input[type="radio"].option3 {
+                width: 15px;
+                height: 15px;
+                border: 3px solid rgb(186, 187, 186);
+                /* 選択肢3の色 */
+            }
 
+            input[type="radio"].option4 {
+                width: 20px;
+                height: 20px;
+                border: 3px solid orange;
+                /* 選択肢4の色 */
+            }
 
+            input[type="radio"].option5 {
+                width: 25px;
+                height: 25px;
+                border: 3px solid orange;
+                /* 選択肢5の色 */
+            }
+
+            /* 選択された場合の背景色 */
+            input[type="radio"]:checked {
+                background-color: blue;
+            }
+
+            /* 質問部分のスタイル */
+            .highlight {
+                background-color: #ffffff;
+                border: 2px solid #919191;
+                padding: 10px;
+                border-radius: 8px;
+                font-weight: bold;
+                /* 太字 */
+                margin-bottom: 20px;
+                /* 質問間のスペース */
+                display: flex;
+                /* 質問全体をフレックスボックス化 */
+                flex-direction: column;
+                /* 質問と選択肢を縦に並べる */
+                align-items: flex-start;
+                /* 質問と選択肢を左揃え */
+            }
+
+            .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                /* ボタン間のスペース */
+                margin-top: 0px;
+            }
         </style>
     </head>
 
@@ -91,309 +157,313 @@ button {
         const questionsWithOptions = [
             {
 
-        question: "新しいクラスや職場になったら、自分から入ろうとするグループは？",
-        options: [
-            "多人数で楽しそうなグループ",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "気が合いそうな人がいるグループ"
-        ]
-    },
-    {
-        question: "気に入らないプレゼントをもらったとき、どう思う？",
-        options: [
-            "気に入らなくても気持ちがうれしい",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "ありがたいけど、内心は選べない"
-        ]
-    },
-    {
-        question: "信頼していた人に裏切られた",
-        options: [
-            "理由をみんなに相談する",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "理由を本人から聞き出す"
-        ]
-    },
-    {
-        question: "パーティーなどの集まりでは",
-        options: [
-            "みんなでワイワイ遊びたい",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "静かにじっくり語り合いたい"
-        ]
-    },
-    {
-        question: "親友の欠点に対しては",
-        options: [
-            "言わずに許すのが本当の友達",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "指摘してあげるのが本当の友達"
-        ]
-    },
-    {
-        question: "若い頃のあなた、気の合わない初対面の人に対しては",
-        options: [
-            "緊張してしゃべりまくった",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "話題が見つからず、気まずくなった"
-        ]
-    },
-    {
-        question: "せっかくの大型連休に予定がない、ずっとひとりで過ごすのは",
-        options: [
-            "なんだか取り残されているみたいで不安",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "大好き！ストレスにならない"
-        ]
-    },
-    {
-        question: "新歓やコンパのあとのカラオケ。選曲のときの基準は",
-        options: [
-            "他のメンバーがどんな曲を選ぶか",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "自分の好きな曲、向いている曲"
-        ]
-    },
-    {
-        question: "あえて選ぶなら、親友とはどっちでしょう？",
-        options: [
-            "今遊んだり相談したりできる人",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "さまざまな思い出を共有している人"
-        ]
-    },
-    {
-        question: "友達や恋人のセンスが、他人とかけ離れているとき",
-        options: [
-            "もちろん気になる",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "まったく気にならない"
-        ]
-    },
-    {
-        question: "気になる人ができた。どっちを考える？",
-        options: [
-            "相手が自分に気があるか",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "自分が相手にどれくらいほれているか"
-        ]
-    },
-    {
-        question: "子どもの頃、叱られたりケンカしたりすると",
-        options: [
-            "駄々をこね、人前で大泣き",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "目立たない場所で泣いたり、すねたり"
-        ]
-    },
-    {
-        question: "グループ内でもめごとは。あなたにとってはどうでもいい問題の場合",
-        options: [
-            "早く決着してほしいので多数派につく",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "よく考えて結論を出す"
-        ]
-    },
-    {
-        question: "思わぬ臨時収入が入った。金額がちょうど同じなら",
-        options: [
-            "自己投資に使いたい",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "前から欲しかったものを買いたい"
-        ]
-    },
-    {
-        question: "同性から旅行に誘われた。一番気になるのは",
-        options: [
-            "参加メンバー",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "どこへ行くか"
-        ]
-    },
-    {
-        question: "予定外に空き時間ができた。そこへ親しくない人からパーティーの誘い",
-        options: [
-            "これも自己投資だと思って出掛ける",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "自分のための時間として使う"
-        ]
-    },
-    {
-        question: "むかしは、他人からどう見られることが多かった？",
-        options: [
-            "人見知りしない",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "人見知りする"
-        ]
-    },
-    {
-        question: "クラスや会社で、仲間同士を強調する熱いタイプに対して",
-        options: [
-            "ノって話を合わせてあげる",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "さからわないが、どうも苦手"
-        ]
-    },
-    {
-        question: "合格率の低い資格が取れた。まずは友達に話すことは？",
-        options: [
-            "どんなに受かるのが大変な試験か",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "資格を使って何をしたいか"
-        ]
-    },
-    {
-        question: "子どもの頃の、イヤな思い出は？",
-        options: [
-            "叱られたり嫌われたりしたこと",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "間違えたりできなかったこと"
-        ]
-    }
-];
+                question: "新しいクラスや職場になったら、自分から入ろうとするグループは？",
+                options: [
+                    "多人数で楽しそうなグループ",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "気が合いそうな人がいるグループ"
+                ]
+            },
+            {
+                question: "気に入らないプレゼントをもらったとき、どう思う？",
+                options: [
+                    "気に入らなくても気持ちがうれしい",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "ありがたいけど、内心は選べない"
+                ]
+            },
+            {
+                question: "信頼していた人に裏切られた",
+                options: [
+                    "理由をみんなに相談する",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "理由を本人から聞き出す"
+                ]
+            },
+            {
+                question: "パーティーなどの集まりでは",
+                options: [
+                    "みんなでワイワイ遊びたい",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "静かにじっくり語り合いたい"
+                ]
+            },
+            {
+                question: "親友の欠点に対しては",
+                options: [
+                    "言わずに許すのが本当の友達",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "指摘してあげるのが本当の友達"
+                ]
+            },
+            {
+                question: "若い頃のあなた、気の合わない初対面の人に対しては",
+                options: [
+                    "緊張してしゃべりまくった",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "話題が見つからず、気まずくなった"
+                ]
+            },
+            {
+                question: "せっかくの大型連休に予定がない、ずっとひとりで過ごすのは",
+                options: [
+                    "なんだか取り残されているみたいで不安",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "大好き！ストレスにならない"
+                ]
+            },
+            {
+                question: "新歓やコンパのあとのカラオケ。選曲のときの基準は",
+                options: [
+                    "他のメンバーがどんな曲を選ぶか",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "自分の好きな曲、向いている曲"
+                ]
+            },
+            {
+                question: "あえて選ぶなら、親友とはどっちでしょう？",
+                options: [
+                    "今遊んだり相談したりできる人",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "さまざまな思い出を共有している人"
+                ]
+            },
+            {
+                question: "友達や恋人のセンスが、他人とかけ離れているとき",
+                options: [
+                    "もちろん気になる",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "まったく気にならない"
+                ]
+            },
+            {
+                question: "気になる人ができた。どっちを考える？",
+                options: [
+                    "相手が自分に気があるか",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "自分が相手にどれくらいほれているか"
+                ]
+            },
+            {
+                question: "子どもの頃、叱られたりケンカしたりすると",
+                options: [
+                    "駄々をこね、人前で大泣き",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "目立たない場所で泣いたり、すねたり"
+                ]
+            },
+            {
+                question: "グループ内でもめごとは。あなたにとってはどうでもいい問題の場合",
+                options: [
+                    "早く決着してほしいので多数派につく",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "よく考えて結論を出す"
+                ]
+            },
+            {
+                question: "思わぬ臨時収入が入った。金額がちょうど同じなら",
+                options: [
+                    "自己投資に使いたい",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "前から欲しかったものを買いたい"
+                ]
+            },
+            {
+                question: "同性から旅行に誘われた。一番気になるのは",
+                options: [
+                    "参加メンバー",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "どこへ行くか"
+                ]
+            },
+            {
+                question: "予定外に空き時間ができた。そこへ親しくない人からパーティーの誘い",
+                options: [
+                    "これも自己投資だと思って出掛ける",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "自分のための時間として使う"
+                ]
+            },
+            {
+                question: "むかしは、他人からどう見られることが多かった？",
+                options: [
+                    "人見知りしない",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "人見知りする"
+                ]
+            },
+            {
+                question: "クラスや会社で、仲間同士を強調する熱いタイプに対して",
+                options: [
+                    "ノって話を合わせてあげる",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "さからわないが、どうも苦手"
+                ]
+            },
+            {
+                question: "合格率の低い資格が取れた。まずは友達に話すことは？",
+                options: [
+                    "どんなに受かるのが大変な試験か",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "資格を使って何をしたいか"
+                ]
+            },
+            {
+                question: "子どもの頃の、イヤな思い出は？",
+                options: [
+                    "叱られたり嫌われたりしたこと",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "間違えたりできなかったこと"
+                ]
+            }
+        ];
 
-    const form = document.getElementById("quizForm");
-    const answers = {}; // 回答を保持するオブジェクト
-    let currentQuestionIndex = 0;
+        const form = document.getElementById("quizForm");
+        const answers = {}; // 回答を保持するオブジェクト
+        let currentQuestionIndex = 0;
 
-    // 質問と選択肢を生成
-    function renderQuestion(index) {
-        form.innerHTML = ""; // フォームの内容をクリア
+        // 質問と選択肢を生成
+        function renderQuestion(index) {
+            form.innerHTML = ""; // フォームの内容をクリア
 
-        const item = questionsWithOptions[index];
-        const questionDiv = document.createElement("div");
+            const item = questionsWithOptions[index];
+            const questionDiv = document.createElement("div");
 
-        // スタイルを適用
-        questionDiv.classList.add("highlight");
+            // スタイルを適用
+            questionDiv.classList.add("highlight");
 
-        const questionText = document.createElement("p");
-        questionText.textContent = `${index + 1}. ${item.question}`;
-        questionDiv.appendChild(questionText);
+            const questionText = document.createElement("p");
+            questionText.textContent = `${index + 1}. ${item.question}`;
+            questionDiv.appendChild(questionText);
 
-        item.options.forEach((option, i) => {
-            const label = document.createElement("label");
-            const input = document.createElement("input");
-            input.type = "radio";
-            input.name = `question${index + 1}`;
-            input.value = ["A", "a", "neutral", "b", "B"][i];
+            item.options.forEach((option, i) => {
+                const label = document.createElement("label");
+                const input = document.createElement("input");
+                input.type = "radio";
+                input.name = `question${index + 1}`;
+                input.value = ["A", "a", "neutral", "b", "B"][i];
 
-            // 既に回答があればその選択肢を選択状態にする
-            if (answers[`question${index + 1}`] === input.value) {
-                input.checked = true;
+                // 各ラジオボタンに個別のクラスを割り当て
+                input.classList.add(`option${i + 1}`);
+
+                // 既に回答があればその選択肢を選択状態にする
+                if (answers[`question${index + 1}`] === input.value) {
+                    input.checked = true;
+                }
+
+                label.appendChild(input);
+                label.append(` ${option}`);
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(document.createElement("br"));
+            });
+
+            form.appendChild(questionDiv);
+        }
+
+        // 最初の質問を表示
+        renderQuestion(currentQuestionIndex);
+
+        // 次の質問に進む
+        document.getElementById("submitButton").addEventListener("click", () => {
+            const formData = new FormData(form);
+
+            // 現在の質問に回答がなければ警告
+            if (!formData.has(`question${currentQuestionIndex + 1}`)) {
+                alert("質問に回答してください。");
+                return;
             }
 
-            label.appendChild(input);
-            label.append(` ${option}`);
-            questionDiv.appendChild(label);
-            questionDiv.appendChild(document.createElement("br"));
+            // 現在の回答を保存
+            answers[`question${currentQuestionIndex + 1}`] = formData.get(
+                `question${currentQuestionIndex + 1}`
+            );
+
+            // 次の質問へ
+            if (currentQuestionIndex < questionsWithOptions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion(currentQuestionIndex);
+            } else {
+                // 点数計算と結果ページの表示
+                calculateResult();
+            }
         });
 
-        form.appendChild(questionDiv);
-    }
+        // 前の質問に戻る
+        document.getElementById("backButton").addEventListener("click", () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion(currentQuestionIndex);
+            }
+        });
 
-    // 最初の質問を表示
-    renderQuestion(currentQuestionIndex);
+        // 結果計算
+        function calculateResult() {
+            let aScore = 0;
+            let bScore = 0;
 
-    // 次の質問に進む
-    document.getElementById("submitButton").addEventListener("click", () => {
-        const formData = new FormData(form);
+            for (let key in answers) {
+                const value = answers[key];
+                if (value === "A") {
+                    aScore += 2;
+                } else if (value === "a") {
+                    aScore += 1;
+                } else if (value === "B") {
+                    bScore += 2;
+                } else if (value === "b") {
+                    bScore += 1;
+                }
+            }
 
-        // 現在の質問に回答がなければ警告
-        if (!formData.has(`question${currentQuestionIndex + 1}`)) {
-            alert("質問に回答してください。");
-            return;
-        }
-
-        // 現在の回答を保存
-        answers[`question${currentQuestionIndex + 1}`] = formData.get(
-            `question${currentQuestionIndex + 1}`
-        );
-
-        // 次の質問へ
-        if (currentQuestionIndex < questionsWithOptions.length - 1) {
-            currentQuestionIndex++;
-            renderQuestion(currentQuestionIndex);
-        } else {
-            // 点数計算と結果ページの表示
-            calculateResult();
-        }
-    });
-
-    // 前の質問に戻る
-    document.getElementById("backButton").addEventListener("click", () => {
-        if (currentQuestionIndex > 0) {
-            currentQuestionIndex--;
-            renderQuestion(currentQuestionIndex);
-        }
-    });
-
-    // 結果計算
-    function calculateResult() {
-        let aScore = 0;
-        let bScore = 0;
-
-        for (let key in answers) {
-            const value = answers[key];
-            if (value === "A") {
-                aScore += 2;
-            } else if (value === "a") {
-                aScore += 1;
-            } else if (value === "B") {
-                bScore += 2;
-            } else if (value === "b") {
-                bScore += 1;
+            if (aScore > bScore) {
+                window.location.href = "page2.html"; // A+aが多い場合
+            } else if (bScore > aScore) {
+                window.location.href = "page3.html"; // B+bが多い場合
+            } else {
+                window.location.href = "page4.html"; // 同点の場合
             }
         }
-
-        if (aScore > bScore) {
-            window.location.href = "page2.html"; // A+aが多い場合
-        } else if (bScore > aScore) {
-            window.location.href = "page3.html"; // B+bが多い場合
-        } else {
-            window.location.href = "page4.html"; // 同点の場合
-        }
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
