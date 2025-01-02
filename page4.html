@@ -81,6 +81,16 @@
 <body>
     <h1>4タイプ診断</h1>
     <h4>4つの解答の中から、ぴったりくるもの1つ選んでください。<br>決められない場合は、2つ選んでも構いません</h4>
+    <!-- 合計点数の表示エリア -->
+    <div id="scoreDisplay" style="margin-bottom: 20px; font-weight: bold; display: none;">
+        <p>現在の点数:</p>
+        <ul>
+            <li>A: <span id="scoreA">0</span></li>
+            <li>B: <span id="scoreB">0</span></li>
+            <li>C: <span id="scoreC">0</span></li>
+            <li>D: <span id="scoreD">0</span></li>
+        </ul>
+    </div>
     <form>
         <div class="question">
             <p>1. 子供のころのあなた。次のうち、特に楽しかったのはどれ？</p>
@@ -168,10 +178,40 @@
 
             const nextButton = document.getElementById('nextButton');
             const backButton = document.getElementById('backButton');
+            const scoreDisplay = {
+                A: document.getElementById('scoreA'),
+                B: document.getElementById('scoreB'),
+                C: document.getElementById('scoreC'),
+                D: document.getElementById('scoreD')
+            };
 
             const updateButtons = () => {
                 backButton.style.display = currentIndex > 0 ? 'block' : 'none';
                 nextButton.textContent = currentIndex === questions.length - 1 ? '結果を見る' : '次へ';
+            };
+
+            const updateScoreDisplay = () => {
+                scoreDisplay.A.textContent = scores.A.toFixed(1);
+                scoreDisplay.B.textContent = scores.B.toFixed(1);
+                scoreDisplay.C.textContent = scores.C.toFixed(1);
+                scoreDisplay.D.textContent = scores.D.toFixed(1);
+            };
+
+            const recalculateScores = () => {
+                scores.A = 0;
+                scores.B = 0;
+                scores.C = 0;
+                scores.D = 0;
+
+                questions.forEach(question => {
+                    const selectedOptions = question.querySelectorAll('.option.selected');
+                    selectedOptions.forEach(option => {
+                        const optionValue = option.getAttribute('data-option');
+                        scores[optionValue] += selectedOptions.length === 1 ? 1 : 0.5;
+                    });
+                });
+
+                updateScoreDisplay();
             };
 
             const calculateResult = () => {
@@ -194,24 +234,18 @@
                 }
             };
 
-            // 初期化
             questions[currentIndex].classList.add('active');
             updateButtons();
+            updateScoreDisplay();
 
             nextButton.addEventListener('click', () => {
                 const currentQuestion = questions[currentIndex];
                 const selectedOptions = currentQuestion.querySelectorAll('.option.selected');
 
-                // 選択肢が1つまたは2つ選ばれていない場合にメッセージを表示
                 if (selectedOptions.length === 0 || selectedOptions.length > 2) {
                     alert('1つまたは2つ選択してください。');
                     return;
                 }
-
-                selectedOptions.forEach(option => {
-                    const optionValue = option.getAttribute('data-option');
-                    scores[optionValue] += selectedOptions.length === 1 ? 1 : 0.5;
-                });
 
                 if (currentIndex < questions.length - 1) {
                     currentQuestion.classList.remove('active');
@@ -219,10 +253,9 @@
                     questions[currentIndex].classList.add('active');
                     updateButtons();
                 } else {
-                    // 「結果を見る」の際は質問を非表示にしない
-                    nextButton.disabled = true; // ボタンを一時無効化
+                    nextButton.disabled = true;
                     nextButton.textContent = "計算中...";
-                    calculateResult(); // 結果を計算してページ遷移
+                    calculateResult();
                 }
             });
 
@@ -233,16 +266,16 @@
                 updateButtons();
             });
 
-            // 選択肢クリックで選択状態をトグル
             document.querySelectorAll('.option').forEach(option => {
                 option.addEventListener('click', () => {
                     const currentQuestion = questions[currentIndex];
                     const selectedOptions = currentQuestion.querySelectorAll('.option.selected');
 
                     if (selectedOptions.length >= 2 && !option.classList.contains('selected')) {
-                        return; // 最大2つまで
+                        return;
                     }
                     option.classList.toggle('selected');
+                    recalculateScores();
                 });
             });
         });
