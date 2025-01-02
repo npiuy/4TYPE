@@ -1,10 +1,152 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4タイプ診断</title>
-</head>
+    <!DOCTYPE html>
+    <html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>4タイプ診断</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            h1,
+            h4 {
+                margin: 10px 0;
+            }
+
+            form {
+                text-align: center;
+                /* フォーム全体を中央揃え */
+            }
+
+            input[type="radio"] {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                margin: 0;
+                /* 不要な余白を除去 */
+                width: 20px;
+                /* ラジオボタンの幅 */
+                height: 20px;
+                /* ラジオボタンの高さ */
+                border: 2px solid #ccc;
+                /* ラジオボタンの枠線 */
+                border-radius: 50%;
+                /* 円形にする */
+                outline: none;
+                cursor: pointer;
+                display: inline-block;
+            }
+
+            /* 各ラジオボタンのサイズと色を個別に設定 */
+            input[type="radio"].option1 {
+                border: 3px solid red;
+                /* 選択肢1の色 */
+            }
+
+            input[type="radio"].option2 {
+                border: 3px solid #fdaaaa;
+                /* 選択肢2の色 */
+            }
+
+            input[type="radio"].option3 {
+                border: 3px solid #d3d3d3;
+                /* 選択肢3の色 */
+            }
+
+            input[type="radio"].option4 {
+                border: 3px solid #8d97ff;
+                /* 選択肢4の色 */
+            }
+
+            input[type="radio"].option5 {
+                border: 3px solid blue;
+                /* 選択肢5の色 */
+            }
+
+            /* 選択された場合の背景色 */
+            input[type="radio"].option1:checked {
+                background-color: red;
+            }
+
+            input[type="radio"].option2:checked {
+                background-color: #fdaaaa;
+            }
+
+            input[type="radio"].option3:checked {
+                background-color: #d3d3d3;
+            }
+
+            input[type="radio"].option4:checked {
+                background-color: #8d97ff;
+            }
+
+            input[type="radio"].option5:checked {
+                background-color: blue;
+            }
+
+            /* 質問部分のスタイル */
+            .highlight {
+                background-color: #ffffff;
+                border: 0px solid #ffffff;
+                padding: 10px;
+                border-radius: 8px;
+                font-weight: bold;
+                /* 太字 */
+                margin-bottom: 0px;
+                /* 質問間のスペース */
+                display: flex;
+                /* 質問全体をフレックスボックス化 */
+                flex-direction: column;
+                /* 質問と選択肢を縦に並べる */
+                text-align: left;
+                /* 選択肢は左揃え */
+            }
+
+            /* ボタンのスタイル */
+            .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                /* ボタン間のスペース */
+                margin-top: 20px;
+                /* 上部マージン */
+            }
+
+            button {
+                font-size: 18px;
+                /* テキストサイズ */
+                padding: 15px 30px;
+                /* 内側の余白（縦 横） */
+                border-radius: 8px;
+                /* ボタンの角丸 */
+                border: none;
+                /* ボーダーをなくす */
+                background-color: #d3d3d3;
+                /* 背景色 */
+                color: black;
+                /* テキスト色 */
+                cursor: pointer;
+                /* カーソルをポインタに変更 */
+            }
+        </style>
+    </head>
+
 <body>
     <h1>4タイプ診断</h1>
     <h4>できるだけ両端に答えてください。<br>どうしてもわからない場合のみ「わからない/どちらでもない」を選択してください。</h4>
@@ -12,139 +154,151 @@
         <!-- 質問リストはJavaScriptで生成 -->
     </form>
     <br>
-    <button type="button" id="submitButton">次へ</button>
+    <div class="button-container">
+        <button type="button" id="backButton">戻る</button>
+        <button type="button" id="submitButton">次へ</button>
+    </div>
+
 
     <script>
         // 質問リスト
         const questionsWithOptions = [
-    {
-        question: "どっちかというと？",
-        options: [
-            "目立ちたがり",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "仕切り屋"
-        ]
-    },
-    {
-        question: "泣いて頼まれたら？",
-        options: [
-            "「イヤ」とは言えない",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "みっともないと思ってしまう"
-        ]
-    },
-    {
-        question: "クラスで一番才能のある人とは？",
-        options: [
-            "友達になりたい",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "ライバルとして認められたい"
-        ]
-    },
-    {
-        question: "好きな人に、「自分はほれらている！」と実感できるのは",
-        options: [
-            "すべてが好きと言われるとき",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "相手の愛情の方が大きいと感じるとき"
-        ]
-    },
-    {
-        question: "どんなプレゼントをあげたい？",
-        options: [
-            "自分があげたいもの",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "誰もが納得できる、価値あるもの"
-        ]
-    },
-    {
-        question: "「よし、明日からは早起きするぞ！」と宣言した。さてどうなる？",
-        options: [
-            "3日で忘れる",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "言った限りは守る"
-        ]
-    },
-    {
-        question: "恋人とそろそろ危ないカンジ。別れるなら、どうする？",
-        options: [
-            "別の人を好きになりフェードアウト",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "相手が言い出す前に切り出す"
-        ]
-    },
-    {
-        question: "子どもの頃、遊ぶときは",
-        options: [
-            "気の合う友達を誘って遊んだ",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "得意な遊びに友達を誘った"
-        ]
-    },
-    {
-        question: "叶えたい夢へのアプローチの方法は？",
-        options: [
-            "有言実行",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "実現の可能性が高くなるまで言わない"
-        ]
-    },
-    {
-        question: "先輩から、同僚に比べ自分が",
-        options: [
-            "目をかけてもらえるとうれしい",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "評価されるとうれしい"
-        ]
-    },
-    {
-        question: "後輩から、自分がどう思われていると分かったらショック？",
-        options: [
-            "怖がられ、嫌われている",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "バカにされ、みくびられている"
-        ]
-    },
-    {
-        question: "買い物で迷っているとき、有効な店員のひと押しの言葉とは？",
-        options: [
-            "「お似合い」「今売れている」",
-            "どちらかといえば↑",
-            "わからない/どちらでもない",
-            "どちらかといえば↓",
-            "「最新型」「限定」「お買い得」"
-        ]
-    }
-];
+            {
+                question: "どっちかというと？",
+                options: [
+                    "目立ちたがり",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "仕切り屋"
+                ]
+            },
+            {
+                question: "泣いて頼まれたら？",
+                options: [
+                    "「イヤ」とは言えない",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "みっともないと思ってしまう"
+                ]
+            },
+            {
+                question: "クラスで一番才能のある人とは？",
+                options: [
+                    "友達になりたい",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "ライバルとして認められたい"
+                ]
+            },
+            {
+                question: "好きな人に、「自分はほれらている！」と実感できるのは",
+                options: [
+                    "すべてが好きと言われるとき",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "相手の愛情の方が大きいと感じるとき"
+                ]
+            },
+            {
+                question: "どんなプレゼントをあげたい？",
+                options: [
+                    "自分があげたいもの",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "誰もが納得できる、価値あるもの"
+                ]
+            },
+            {
+                question: "「よし、明日からは早起きするぞ！」と宣言した。さてどうなる？",
+                options: [
+                    "3日で忘れる",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "言った限りは守る"
+                ]
+            },
+            {
+                question: "恋人とそろそろ危ないカンジ。別れるなら、どうする？",
+                options: [
+                    "別の人を好きになりフェードアウト",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "相手が言い出す前に切り出す"
+                ]
+            },
+            {
+                question: "子どもの頃、遊ぶときは",
+                options: [
+                    "気の合う友達を誘って遊んだ",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "得意な遊びに友達を誘った"
+                ]
+            },
+            {
+                question: "叶えたい夢へのアプローチの方法は？",
+                options: [
+                    "有言実行",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "実現の可能性が高くなるまで言わない"
+                ]
+            },
+            {
+                question: "先輩から、同僚に比べ自分が",
+                options: [
+                    "目をかけてもらえるとうれしい",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "評価されるとうれしい"
+                ]
+            },
+            {
+                question: "後輩から、自分がどう思われていると分かったらショック？",
+                options: [
+                    "怖がられ、嫌われている",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "バカにされ、みくびられている"
+                ]
+            },
+            {
+                question: "買い物で迷っているとき、有効な店員のひと押しの言葉とは？",
+                options: [
+                    "「お似合い」「今売れている」",
+                    "どちらかといえば↑",
+                    "わからない/どちらでもない",
+                    "どちらかといえば↓",
+                    "「最新型」「限定」「お買い得」"
+                ]
+            }
+        ];
 
 
         const form = document.getElementById("quizForm");
+        const answers = {}; // 回答を保持するオブジェクト
+        let currentQuestionIndex = 0;
 
         // 質問と選択肢を生成
-        questionsWithOptions.forEach((item, index) => {
+        function renderQuestion(index) {
+            form.innerHTML = ""; // フォームの内容をクリア
+
+            const item = questionsWithOptions[index];
             const questionDiv = document.createElement("div");
+
+            // スタイルを適用
+            questionDiv.classList.add("highlight");
 
             const questionText = document.createElement("p");
             questionText.textContent = `${index + 1}. ${item.question}`;
@@ -155,8 +309,15 @@
                 const input = document.createElement("input");
                 input.type = "radio";
                 input.name = `question${index + 1}`;
-                input.value = ["A", "a", "neutral", "b", "B"][i]; // 内部で使う値
-                input.required = true;
+                input.value = ["A", "a", "neutral", "b", "B"][i];
+
+                // 各ラジオボタンに個別のクラスを割り当て
+                input.classList.add(`option${i + 1}`);
+
+                // 既に回答があればその選択肢を選択状態にする
+                if (answers[`question${index + 1}`] === input.value) {
+                    input.checked = true;
+                }
 
                 label.appendChild(input);
                 label.append(` ${option}`);
@@ -165,20 +326,51 @@
             });
 
             form.appendChild(questionDiv);
-        });
+        }
 
-        // 点数計算とページ遷移
+        // 最初の質問を表示
+        renderQuestion(currentQuestionIndex);
+
+        // 次の質問に進む
         document.getElementById("submitButton").addEventListener("click", () => {
-            if (!form.checkValidity()) {
-                alert("全ての質問に回答してください。");
-                return; // 未回答がある場合は処理を中断
+            const formData = new FormData(form);
+
+            // 現在の質問に回答がなければ警告
+            if (!formData.has(`question${currentQuestionIndex + 1}`)) {
+                alert("質問に回答してください。");
+                return;
             }
 
-            const formData = new FormData(form);
+            // 現在の回答を保存
+            answers[`question${currentQuestionIndex + 1}`] = formData.get(
+                `question${currentQuestionIndex + 1}`
+            );
+
+            // 次の質問へ
+            if (currentQuestionIndex < questionsWithOptions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion(currentQuestionIndex);
+            } else {
+                // 点数計算と結果ページの表示
+                calculateResult();
+            }
+        });
+
+        // 前の質問に戻る
+        document.getElementById("backButton").addEventListener("click", () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion(currentQuestionIndex);
+            }
+        });
+
+        // 結果計算
+        function calculateResult() {
             let aScore = 0;
             let bScore = 0;
 
-            for (let [key, value] of formData.entries()) {
+            for (let key in answers) {
+                const value = answers[key];
                 if (value === "A") {
                     aScore += 2;
                 } else if (value === "a") {
@@ -197,7 +389,9 @@
             } else {
                 window.location.href = "page4.html"; // 同点の場合
             }
-        });
+        }
     </script>
+
 </body>
+
 </html>
