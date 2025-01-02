@@ -1,10 +1,78 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4タイプ診断</title>
-</head>
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>4タイプ診断</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+    
+            h1, h4 {
+                margin: 10px 0;
+            }
+    
+            form {
+    text-align: left; /* フォーム内部は左揃え */
+}
+    
+            form div {
+                margin-bottom: 20px;
+            }
+    
+            label {
+                display: block;
+                margin: 5px 0;
+            }
+    
+            button {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            /* 質問用スタイル */
+.highlight {
+    background-color: #f0efef; 
+    border: 2px solid #919191; 
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold; /* 太字 */
+    margin-bottom: 20px; /* 質問間のスペース */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* ボタン間のスペース */
+    margin-top: 0px;
+}
+
+button {
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+        </style>
+    </head>
+
 <body>
     <h1>4タイプ診断</h1>
     <h4>できるだけ両端に答えてください。<br>どうしてもわからない場合のみ「わからない/どちらでもない」を選択してください。</h4>
@@ -12,7 +80,11 @@
         <!-- 質問リストはJavaScriptで生成 -->
     </form>
     <br>
-    <button type="button" id="submitButton">次へ</button>
+    <div class="button-container">
+        <button type="button" id="backButton">戻る</button>
+        <button type="button" id="submitButton">次へ</button>
+    </div>
+
 
     <script>
         // 質問リスト
@@ -220,65 +292,108 @@
     }
 ];
 
+    const form = document.getElementById("quizForm");
+    const answers = {}; // 回答を保持するオブジェクト
+    let currentQuestionIndex = 0;
 
-        const form = document.getElementById("quizForm");
+    // 質問と選択肢を生成
+    function renderQuestion(index) {
+        form.innerHTML = ""; // フォームの内容をクリア
 
-        // 質問と選択肢を生成
-        questionsWithOptions.forEach((item, index) => {
-            const questionDiv = document.createElement("div");
+        const item = questionsWithOptions[index];
+        const questionDiv = document.createElement("div");
 
-            const questionText = document.createElement("p");
-            questionText.textContent = `${index + 1}. ${item.question}`;
-            questionDiv.appendChild(questionText);
+        // スタイルを適用
+        questionDiv.classList.add("highlight");
 
-            item.options.forEach((option, i) => {
-                const label = document.createElement("label");
-                const input = document.createElement("input");
-                input.type = "radio";
-                input.name = `question${index + 1}`;
-                input.value = ["A", "a", "neutral", "b", "B"][i]; // 内部で使う値
-                input.required = true;
+        const questionText = document.createElement("p");
+        questionText.textContent = `${index + 1}. ${item.question}`;
+        questionDiv.appendChild(questionText);
 
-                label.appendChild(input);
-                label.append(` ${option}`);
-                questionDiv.appendChild(label);
-                questionDiv.appendChild(document.createElement("br"));
-            });
+        item.options.forEach((option, i) => {
+            const label = document.createElement("label");
+            const input = document.createElement("input");
+            input.type = "radio";
+            input.name = `question${index + 1}`;
+            input.value = ["A", "a", "neutral", "b", "B"][i];
 
-            form.appendChild(questionDiv);
+            // 既に回答があればその選択肢を選択状態にする
+            if (answers[`question${index + 1}`] === input.value) {
+                input.checked = true;
+            }
+
+            label.appendChild(input);
+            label.append(` ${option}`);
+            questionDiv.appendChild(label);
+            questionDiv.appendChild(document.createElement("br"));
         });
 
-        // 点数計算とページ遷移
-        document.getElementById("submitButton").addEventListener("click", () => {
-            if (!form.checkValidity()) {
-                alert("全ての質問に回答してください。");
-                return; // 未回答がある場合は処理を中断
-            }
+        form.appendChild(questionDiv);
+    }
 
-            const formData = new FormData(form);
-            let aScore = 0;
-            let bScore = 0;
+    // 最初の質問を表示
+    renderQuestion(currentQuestionIndex);
 
-            for (let [key, value] of formData.entries()) {
-                if (value === "A") {
-                    aScore += 2;
-                } else if (value === "a") {
-                    aScore += 1;
-                } else if (value === "B") {
-                    bScore += 2;
-                } else if (value === "b") {
-                    bScore += 1;
-                }
-            }
+    // 次の質問に進む
+    document.getElementById("submitButton").addEventListener("click", () => {
+        const formData = new FormData(form);
 
-            if (aScore > bScore) {
-                window.location.href = "page2.html"; // A+aが多い場合
-            } else if (bScore > aScore) {
-                window.location.href = "page3.html"; // B+bが多い場合
-            } else {
-                window.location.href = "page4.html"; // 同点の場合
+        // 現在の質問に回答がなければ警告
+        if (!formData.has(`question${currentQuestionIndex + 1}`)) {
+            alert("質問に回答してください。");
+            return;
+        }
+
+        // 現在の回答を保存
+        answers[`question${currentQuestionIndex + 1}`] = formData.get(
+            `question${currentQuestionIndex + 1}`
+        );
+
+        // 次の質問へ
+        if (currentQuestionIndex < questionsWithOptions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion(currentQuestionIndex);
+        } else {
+            // 点数計算と結果ページの表示
+            calculateResult();
+        }
+    });
+
+    // 前の質問に戻る
+    document.getElementById("backButton").addEventListener("click", () => {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion(currentQuestionIndex);
+        }
+    });
+
+    // 結果計算
+    function calculateResult() {
+        let aScore = 0;
+        let bScore = 0;
+
+        for (let key in answers) {
+            const value = answers[key];
+            if (value === "A") {
+                aScore += 2;
+            } else if (value === "a") {
+                aScore += 1;
+            } else if (value === "B") {
+                bScore += 2;
+            } else if (value === "b") {
+                bScore += 1;
             }
-        });
-    </script>
+        }
+
+        if (aScore > bScore) {
+            window.location.href = "page2.html"; // A+aが多い場合
+        } else if (bScore > aScore) {
+            window.location.href = "page3.html"; // B+bが多い場合
+        } else {
+            window.location.href = "page4.html"; // 同点の場合
+        }
+    }
+</script>
+
 </body>
 </html>
