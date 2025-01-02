@@ -13,129 +13,124 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>4タイプ診断</title>
         <style>
-            body {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-            }
+ body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-            h1,
-            h4 {
-                margin: 10px 0;
-            }
+h1,
+h4 {
+    margin: 10px 0;
+}
 
-            form {
-                text-align: left;
-                /* フォーム内部は左揃え */
-            }
+form {
+    text-align: left; /* フォーム内部は左揃え */
+}
 
-            form div {
-                margin-bottom: 20px;
-            }
+form div {
+    margin-bottom: 20px;
+}
 
-            label {
-                display: flex;
-                /* ラジオボタンとテキストをフレックスボックスにする */
-                align-items: center;
-                /* ラジオボタンとテキストを垂直方向に中央揃え */
-                gap: 10px;
-                /* ラジオボタンとテキストの間隔 */
-                justify-content: flex-start;
-                /* 全体を左揃え */
-            }
+label {
+    display: flex; /* ラジオボタンとテキストをフレックスボックスにする */
+    align-items: center; /* ラジオボタンとテキストを垂直方向に中央揃え */
+    gap: 10px; /* ラジオボタンとテキストの間隔 */
+    justify-content: flex-start; /* 全体を左揃え */
+}
 
-            input[type="radio"] {
-                appearance: none;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                margin: 0;
-                /* 不要な余白を除去 */
-                width: 20px;
-                /* ラジオボタンの幅 */
-                height: 20px;
-                /* ラジオボタンの高さ */
-                border: 2px solid #ccc;
-                /* ラジオボタンの枠線 */
-                border-radius: 50%;
-                /* 円形にする */
-                outline: none;
-                cursor: pointer;
-                display: inline-block;
-                vertical-align: middle;
-                /* 垂直方向に中央揃え */
-            }
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0; /* 不要な余白を除去 */
+    width: 20px; /* ラジオボタンの幅 */
+    height: 20px; /* ラジオボタンの高さ */
+    border: 2px solid #ccc; /* ラジオボタンの枠線 */
+    border-radius: 50%; /* 円形にする */
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle; /* 垂直方向に中央揃え */
+}
 
-            /* 各ラジオボタンのサイズと色を個別に設定 */
-            input[type="radio"].option1 {
-                width: 25px;
-                height: 25px;
-                border: 3px solid red;
-                /* 選択肢1の色 */
-            }
+/* 各ラジオボタンのサイズと色を個別に設定 */
+input[type="radio"].option1 {
+    width: 25px;
+    height: 25px;
+    border: 3px solid red; /* 選択肢1の色 */
+}
 
-            input[type="radio"].option2 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid red;
-                /* 選択肢2の色 */
-            }
+input[type="radio"].option2 {
+    width: 20px;
+    height: 20px;
+    border: 3px solid red; /* 選択肢2の色 */
+}
 
-            input[type="radio"].option3 {
-                width: 15px;
-                height: 15px;
-                border: 3px solid rgb(186, 187, 186);
-                /* 選択肢3の色 */
-            }
+input[type="radio"].option3 {
+    width: 15px;
+    height: 15px;
+    border: 3px solid rgb(186, 187, 186); /* 選択肢3の色 */
+}
 
-            input[type="radio"].option4 {
-                width: 20px;
-                height: 20px;
-                border: 3px solid orange;
-                /* 選択肢4の色 */
-            }
+input[type="radio"].option4 {
+    width: 20px;
+    height: 20px;
+    border: 3px solid orange; /* 選択肢4の色 */
+}
 
-            input[type="radio"].option5 {
-                width: 25px;
-                height: 25px;
-                border: 3px solid orange;
-                /* 選択肢5の色 */
-            }
+input[type="radio"].option5 {
+    width: 25px;
+    height: 25px;
+    border: 3px solid orange; /* 選択肢5の色 */
+}
 
-            /* 選択された場合の背景色 */
-            input[type="radio"]:checked {
-                background-color: grey;
-            }
+/* 選択された場合の背景色 */
+input[type="radio"]:checked {
+    background-color: grey;
+}
 
-            /* 質問部分のスタイル */
-            .highlight {
-                background-color: #ffffff;
-                border: 2px solid #919191;
-                padding: 10px;
-                border-radius: 8px;
-                font-weight: bold;
-                /* 太字 */
-                margin-bottom: 20px;
-                /* 質問間のスペース */
-                display: flex;
-                /* 質問全体をフレックスボックス化 */
-                flex-direction: column;
-                /* 質問と選択肢を縦に並べる */
-                align-items: flex-start;
-                /* 質問と選択肢を左揃え */
-            }
+/* 質問部分のスタイル */
+.highlight {
+    background-color: #ffffff;
+    border: 2px solid #919191;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold; /* 太字 */
+    margin-bottom: 20px; /* 質問間のスペース */
+    display: flex; /* 質問全体をフレックスボックス化 */
+    flex-direction: column; /* 質問と選択肢を縦に並べる */
+    align-items: flex-start; /* 質問と選択肢を左揃え */
+}
 
-            .button-container {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                /* ボタン間のスペース */
-                margin-top: 0px;
-            }
+/* ボタンのスタイル */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* ボタン間のスペース */
+    margin-top: 20px; /* 上部マージン */
+}
+
+button {
+    font-size: 18px; /* テキストサイズ */
+    padding: 15px 30px; /* 内側の余白（縦 横） */
+    border-radius: 8px; /* ボタンの角丸 */
+    border: none; /* ボーダーをなくす */
+    background-color: #d1cfcf; /* 背景色 */
+    color: black; /* テキスト色 */
+    cursor: pointer; /* カーソルをポインタに変更 */
+    transition: transform 0.2s; /* ホバー時のアニメーション効果 */
+}
+
+button:hover {
+    transform: scale(1.1); /* ホバー時に拡大 */
+}
+
         </style>
     </head>
 
