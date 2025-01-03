@@ -300,7 +300,7 @@
             questionDiv.classList.add("highlight");
 
             const questionText = document.createElement("p");
-            questionText.textContent = `${index + 1}. ${item.question}`;
+            questionText.textContent = item.question;
             questionDiv.appendChild(questionText);
 
             item.options.forEach((option, i) => {
